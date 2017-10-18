@@ -13,9 +13,9 @@ A Go lang micro library to parse english future or past time events to Go native
 parser := after.New()
 
 // "Duration" returns a time.Duration object with the equivalent of the input
-hour, err := parser.Duration("1 hour")
+anHour, err := parser.Duration("1 hour")
 
-// "SinceNow" returns a time.Time object that represents a point in time plus the specified input
+// "SinceNow" returns a time.Time object that represents the current point in time plus the specified input
 inTenMinutes, err := parser.SinceNow("10 minutes")
 
 // "Since" returns a time.Time object that represents the given point in time plus the specified input
