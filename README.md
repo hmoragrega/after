@@ -1,5 +1,6 @@
 # After
-A Go lang micro library to parse english future or past time events to Go native time durations
+A Go lang micro library to parse english future or past time events to Go native time durations  
+[![Build Status](https://travis-ci.org/hmoragrega/after.svg?branch=master)](https://travis-ci.org/hmoragrega/after)
 
 ## Examples
 * `10s`: after ten seconds
@@ -7,6 +8,11 @@ A Go lang micro library to parse english future or past time events to Go native
 * `2 hours`: after two hours
 * `-1 day`: minus one day
 * `-2w`: minus two weeks
+
+## Installation
+```
+go get github.com/hmoragrega/after
+```
 
 ## Usage
 ```go
