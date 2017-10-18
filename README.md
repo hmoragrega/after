@@ -8,13 +8,27 @@ A Go lang micro library to parse english future or past time events to Go native
 * `-1 day`: minus one day
 * `-2w`: minus two weeks
 
+## Usage
+```go
+parser := after.New()
+
+// "Duration" returns a time.Duration object with the equivalent of the input
+hour, err := parser.Duration("1 hour")
+
+// "SinceNow" returns a time.Time object that represents a point in time plus the specified input
+inTenMinutes, err := parser.SinceNow("10 minutes")
+
+// "Since" returns a time.Time object that represents the given point in time plus the specified input
+nowAgain, err := parser.Since(inTenMinutes, "-10 minutes")
+```
+
 ## Available units
 The available time units are
 * `s`, `second` or `seconds`
 * `m`, `minute` or `minutes`
-* `h`, `hour` or `hours`
-* `d`, `day` or `days`
-* `w`, `week` or `weeks`
+* `h`, `hour`   or `hours`
+* `d`, `day`    or `days`
+* `w`, `week`   or `weeks`
 
 ## Multiplier
 It's the number that will multiply the time unit:
@@ -23,7 +37,7 @@ It's the number that will multiply the time unit:
  * Omitting the sign is equivalent to using a plus sign 
 
 ### Validation
-You can use this regular expression to validate your retry configuration:
+You can use this regular expression to validate your inputs:
  ```
  ^((\\+|\\-))?([1-9][0-9]*)\\s?(s|seconds?|m|minutes?|h|hours?|d|days?|w|weeks?)$
  ```
