@@ -28,18 +28,18 @@ func New() *Parser {
 // The input string must contain a time unit and a signed multiplier ('+' sign by default if omitted)
 //
 // The accepted time unit are:
-// - `s`, `second` or `seconds`
-// - `m`, `minute` or `minutes`
-// - `h`, `hour`   or `hours`
-// - `d`, `day`    or `days`
-// - `w`, `week`   or `weeks`
+// * `s`, `second` or `seconds`
+// * `m`, `minute` or `minutes`
+// * `h`, `hour`   or `hours`
+// * `d`, `day`    or `days`
+// * `w`, `week`   or `weeks`
 //
 // Examples:
-// - `10s`: after ten seconds
-// - `+1 minute`: after one minute
-// - `2 hours`: after two hours
-// - `-1 day`: minus one day
-// - `-2w`: minus two weeks
+// * `10s`: after ten seconds
+// * `+1 minute`: after one minute
+// * `2 hours`: after two hours
+// * `-1 day`: minus one day
+// * `-2w`: minus two weeks
 func (p *Parser) Duration(duration string) (time.Duration, error) {
 	const (
 		Sign       = 2
