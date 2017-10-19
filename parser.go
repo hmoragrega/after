@@ -8,19 +8,17 @@ import (
 )
 
 const (
-	Regex      = "^((\\+|\\-))?([1-9][0-9]*)\\s?(s|seconds?|m|minutes?|h|hours?|d|days?|w|weeks?)$"
-	Day        = time.Hour * 24
-	Week       = Day * 7
-	Sign       = 2
-	Multiplier = 3
-	Unit       = 4
-	Minus      = "-"
+	Regex = "^((\\+|\\-))?([1-9][0-9]*)\\s?(s|seconds?|m|minutes?|h|hours?|d|days?|w|weeks?)$"
+	Day   = time.Hour * 24
+	Week  = Day * 7
 )
 
 var compiledRegex *regexp.Regexp 
 
+// Parser is the service that will provide the package functionality
 type Parser struct {}
 
+// New will return pointer to a new Parser
 func New() *Parser {
 	return &Parser{}
 }
@@ -43,6 +41,12 @@ func New() *Parser {
 // - `-1 day`: minus one day
 // - `-2w`: minus two weeks
 func (p *Parser) Duration(duration string) (time.Duration, error) {
+	const (
+		Sign       = 2
+		Multiplier = 3
+		Unit       = 4
+	)
+
 	regex, err := p.getRegex()
 	if err != nil {
 		return 0, err
@@ -82,7 +86,7 @@ func (p *Parser) getMultiplier(sign string, multiplier string) (time.Duration, e
 		return 0, err
 	}
 
-	if sign == Minus {
+	if sign == "-" {
 		result *= -1
 	}
 
