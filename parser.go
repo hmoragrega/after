@@ -72,12 +72,12 @@ func (p *Parser) SinceNow(duration string) (time.Time, error) {
 
 // Since returns a time.Time object that represents the given point in time plus (or minus) the specified duration
 func (p *Parser) Since(moment time.Time, duration string) (time.Time, error) {
-	duration, err := p.Duration(duration)
+	result, err := p.Duration(duration)
 	if err != nil {
 		return moment, err
 	}
 
-	return moment.Add(duration), nil
+	return moment.Add(result), nil
 }
 
 func (p *Parser) getMultiplier(sign string, multiplier string) (time.Duration, error) {
