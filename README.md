@@ -1,5 +1,5 @@
 # After   [![Build Status](https://travis-ci.org/hmoragrega/after.svg?branch=master)](https://travis-ci.org/hmoragrega/after)
-A Go lang micro library to parse english future or past time events to Go native time durations  
+A Go lang micro library to parse english future or past time events to Go native time objects  
 
 ## Examples
 * `10s`: after ten seconds
@@ -20,7 +20,7 @@ parser := after.New()
 // "Duration" returns a time.Duration object with the equivalent of the input
 anHour, err := parser.Duration("1 hour")
 
-// "SinceNow" returns a time.Time object that represents the current point in time plus the specified input
+// SinceNow returns a time.Time object that represents the current point in time plus (or minus) the specified duration
 inTenMinutes, err := parser.SinceNow("10 minutes")
 
 // "Since" returns a time.Time object that represents the given point in time plus the specified input

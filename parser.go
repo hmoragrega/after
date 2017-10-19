@@ -25,16 +25,32 @@ func New() *Parser {
 	return &Parser{}
 }
 
-// Duration returns the time duration calculated from the given input string 
-func (p *Parser) Duration(input string) (time.Duration, error) {
+// Duration returns a time.Duration object with the equivalent duration representation of the input
+//
+// The input string must contain a time unit and a signed multiplier ('+' sign by default if omitted)
+//
+// The accepted time unit are:
+// - `s`, `second` or `seconds`
+// - `m`, `minute` or `minutes`
+// - `h`, `hour`   or `hours`
+// - `d`, `day`    or `days`
+// - `w`, `week`   or `weeks`
+//
+// Examples:
+// - `10s`: after ten seconds
+// - `+1 minute`: after one minute
+// - `2 hours`: after two hours
+// - `-1 day`: minus one day
+// - `-2w`: minus two weeks
+func (p *Parser) Duration(duration string) (time.Duration, error) {
 	regex, err := p.getRegex()
 	if err != nil {
 		return 0, err
 	}
 
-	matches := regex.FindStringSubmatch(input)
+	matches := regex.FindStringSubmatch(duration)
 	if matches == nil || len(matches) == 0 {
-		return 0, fmt.Errorf("The provided string '%s' is not a valid duration indicator", input)
+		return 0, fmt.Errorf("The provided string '%s' is not a valid duration indicator", duration)
 	}
 
 	multiplier, err := p.getMultiplier(matches[Sign], matches[Multiplier])
@@ -45,19 +61,19 @@ func (p *Parser) Duration(input string) (time.Duration, error) {
 	return p.getDuration(matches[Unit], multiplier)
 }
 
-// Since returns a point in time after adding (or subtracting) the duration of the input string to a given moment
-func (p *Parser) Since(moment time.Time, input string) (time.Time, error) {
-	duration, err := p.Duration(input)
+// SinceNow returns a time.Time object that represents the current point in time plus (or minus) the specified duration
+func (p *Parser) SinceNow(duration string) (time.Time, error) {
+	return p.Since(time.Now(), duration)
+}
+
+// Since returns a time.Time object that represents the given point in time plus (or minus) the specified duration
+func (p *Parser) Since(moment time.Time, duration string) (time.Time, error) {
+	duration, err := p.Duration(duration)
 	if err != nil {
 		return moment, err
 	}
 
 	return moment.Add(duration), nil
-}
-
-// SinceNow returns a point in time after adding (or subtracting) the duration of the input string from now
-func (p *Parser) SinceNow(input string) (time.Time, error) {
-	return p.Since(time.Now(), input)
 }
 
 func (p *Parser) getMultiplier(sign string, multiplier string) (time.Duration, error) {
