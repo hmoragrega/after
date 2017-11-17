@@ -29,6 +29,7 @@ nowAgain, err := parser.Since(inTenMinutes, "-10 minutes")
 
 ## Available units
 The available time units are
+* `ms`, `millisecond` or `milliseconds`
 * `s`, `second` or `seconds`
 * `m`, `minute` or `minutes`
 * `h`, `hour`   or `hours`
@@ -44,7 +45,7 @@ It's the number that will multiply the time unit:
 ### Validation
 You can use this regular expression to validate your inputs:
  ```
- ^((\\+|\\-))?([1-9][0-9]*)\\s?(s|seconds?|m|minutes?|h|hours?|d|days?|w|weeks?)$
+ ^((\+|\-))?([1-9][0-9]*)\s?(ms|milliseconds?|s|seconds?|m|minutes?|h|hours?|d|days?|w|weeks?)$
  ```
 
 ## Scope

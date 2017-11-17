@@ -8,12 +8,33 @@ import (
 )
 
 const (
-	Regex = "^((\\+|\\-))?([1-9][0-9]*)\\s?(s|seconds?|m|minutes?|h|hours?|d|days?|w|weeks?)$"
+	Regex = "^((\\+|\\-))?([1-9][0-9]*)\\s?(ms|milliseconds?|s|seconds?|m|minutes?|h|hours?|d|days?|w|weeks?)$"
 	Day   = time.Hour * 24
 	Week  = Day * 7
 )
 
-var compiledRegex *regexp.Regexp 
+var compiledRegex *regexp.Regexp
+
+var unitMap = map[string]time.Duration{
+	"ms":           time.Millisecond,
+	"millisecond":  time.Millisecond,
+	"milliseconds": time.Millisecond,
+	"s":            time.Second,
+	"second":       time.Second,
+	"seconds":      time.Second,
+	"m":            time.Minute,
+	"minute":       time.Minute,
+	"minutes":      time.Minute,
+	"h":            time.Hour,
+	"hour":         time.Hour,
+	"hours":        time.Hour,
+	"d":            Day,
+	"day":          Day,
+	"days":         Day,
+	"w":            Week,
+	"week":         Week,
+	"weeks":        Week,
+}
 
 // Parser is the service that will provide the package functionality
 type Parser struct {}
@@ -28,6 +49,7 @@ func New() *Parser {
 // The input string must contain a time unit and a signed multiplier ('+' sign by default if omitted)
 //
 // The accepted time unit are:
+//  - `ms`, `millisecond` or `milliseconds`
 //  - `s`, `second` or `seconds`
 //  - `m`, `minute` or `minutes`
 //  - `h`, `hour`   or `hours`
@@ -94,20 +116,12 @@ func (p *Parser) getMultiplier(sign string, multiplier string) (time.Duration, e
 }
 
 func (p *Parser) getDuration(unit string, multiplier time.Duration) (time.Duration, error) {
-	switch unit[:1] {
-	case "s":
-		return time.Second * multiplier, nil
-	case "m":
-		return time.Minute * multiplier, nil
-	case "h":
-		return time.Hour * multiplier, nil
-	case "d":
-		return Day * multiplier, nil
-	case "w":
-		return Week * multiplier, nil
+	duration, found := unitMap[unit]
+	if !found {
+		return 0, fmt.Errorf("The duration unit '%s' is not supported", unit)
 	}
 
-	return 0, fmt.Errorf("The duration unit '%s' is not supported", unit)
+	return duration * multiplier, nil
 }
 
 func (p *Parser) getRegex() (*regexp.Regexp, error) {
