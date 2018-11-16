@@ -3,6 +3,7 @@ package after_test
 import (
 	"testing"
 	"time"
+
 	"github.com/hmoragrega/after"
 )
 
@@ -31,7 +32,7 @@ func TestItParsePositiveDurationsCorrectly(t *testing.T) {
 	}
 
 	for input, expected := range valid {
-		duration, err := parser.Duration(input);
+		duration, err := parser.Duration(input)
 		if err != nil {
 			t.Errorf("The input '%s' should be valid, error found: %s", input, err)
 		}
@@ -67,7 +68,7 @@ func TestItParseNegativeDurationsCorrectly(t *testing.T) {
 	}
 
 	for input, expected := range valid {
-		duration, err := parser.Duration(input);
+		duration, err := parser.Duration(input)
 		if err != nil {
 			t.Errorf("The input '%s' should be valid, error found: %s", input, err)
 		}
@@ -82,9 +83,9 @@ func TestItFailsOnNonValidStrings(t *testing.T) {
 	parser := after.New()
 
 	invalid := []string{
-		"1f",  "+1 foo",    // invalid unit  'f - foo'
-		"0m",  "+0 minute", // invalid value '0'
-		"h",   "hour",      // missing value
+		"1f", "+1 foo", // invalid unit  'f - foo'
+		"0m", "+0 minute", // invalid value '0'
+		"h", "hour", // missing value
 		" 1w", "+1   week", // extra whitespace
 	}
 
@@ -98,8 +99,8 @@ func TestItFailsOnNonValidStrings(t *testing.T) {
 func TestItAddTheDurationToAGivenMoment(t *testing.T) {
 	parser := after.New()
 
-	moment   := time.Now()
-	input    := "1m"
+	moment := time.Now()
+	input := "1m"
 	expected := moment.Add(time.Minute)
 
 	result, err := parser.Since(moment, input)
@@ -115,7 +116,7 @@ func TestItAddTheDurationToAGivenMoment(t *testing.T) {
 func TestItAddTheDurationToNow(t *testing.T) {
 	parser := after.New()
 
-	input    := "1m"
+	input := "1m"
 	_, err := parser.SinceNow(input)
 	if err != nil {
 		t.Errorf("There was an unexpected error while calculting a point in time since now: %s", err)

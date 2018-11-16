@@ -1,16 +1,19 @@
 package after
 
 import (
-	"time"
 	"fmt"
-	"strconv"
 	"regexp"
+	"strconv"
+	"time"
 )
 
 const (
+	// Regex used to match the duration
 	Regex = "^((\\+|\\-))?([1-9][0-9]*)\\s?(ms|milliseconds?|s|seconds?|m|minutes?|h|hours?|d|days?|w|weeks?)$"
-	Day   = time.Hour * 24
-	Week  = Day * 7
+	// Day represents 24 hours durations
+	Day = time.Hour * 24
+	// Week represents 7 days
+	Week = Day * 7
 )
 
 var compiledRegex *regexp.Regexp
@@ -37,7 +40,7 @@ var unitMap = map[string]time.Duration{
 }
 
 // Parser is the service that will provide the package functionality
-type Parser struct {}
+type Parser struct{}
 
 // New will return pointer to a new Parser
 func New() *Parser {

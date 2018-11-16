@@ -1,4 +1,6 @@
 # After [![godoc](http://img.shields.io/badge/godoc-reference-blue.svg?style=flat)](https://godoc.org/github.com/hmoragrega/after)  [![Build Status](https://travis-ci.org/hmoragrega/after.svg?branch=master)](https://travis-ci.org/hmoragrega/after)
+[![Go Report Card](https://goreportcard.com/badge/github.com/hmoragrega/after)](https://goreportcard.com/report/github.com/hmoragrega/after)
+
 A Go lang micro library to parse english future or past time events to Go native time objects  
 
 ## Examples
